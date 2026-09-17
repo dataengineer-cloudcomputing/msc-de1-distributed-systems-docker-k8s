@@ -1,0 +1,17 @@
+cat > evidence/baseline.txt << 'EOF'
+=== Baseline verification - flask-sample-app ===
+
+App started with: python run.py
+Output: Running on http://127.0.0.1:5000
+
+--- Routes tested (curl -4, IPv4 forced due to macOS AirPlay Receiver on port 5000) ---
+GET /            -> Hello, Flask!
+GET /items       -> {"items":[]}
+GET /items/1     -> {"error":"Item not found"}
+POST /items      -> {"message":"Item added successfully"}
+GET /items (after POST) -> {"items":[{"name":"test"}]}
+
+--- Unit tests ---
+Command: python -m unittest discover tests
+Result: Ran 4 tests in 0.111s - OK
+EOF
