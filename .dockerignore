@@ -9,3 +9,6 @@ evidence/
 security/
 *.md
 tests/
+.vscode/
+.idea/
+report/
