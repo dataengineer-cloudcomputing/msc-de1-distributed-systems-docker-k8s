@@ -1,0 +1,25 @@
+=== Rolling update & rollback demonstration ===
+
+1. Added /version route (returns {"version": "1.1.0"}), built and pushed
+   whale92400/msc-de1-flask-app:1.1.0 to Docker Hub.
+
+2. Rolling update:
+   Command: kubectl apply -f k8s/deployment.yaml (image bumped to 1.1.0)
+   Command: kubectl rollout status deployment/flask-app -n msc-de1-project
+   Result: "deployment flask-app successfully rolled out"
+   Verified: both pods running 1.1.0, curl /version -> {"version":"1.1.0"}
+
+3. Rollout history:
+   REVISION 1 -> initial deploy (1.0.0)
+   REVISION 2 -> update to 1.1.0
+
+4. Rollback:
+   Command: kubectl rollout undo deployment/flask-app -n msc-de1-project
+   Result: "deployment.apps/flask-app rolled back"
+   Verified: both pods back on whale92400/msc-de1-flask-app:1.0.0
+
+Explanation: Deployments keep a revision history of ReplicaSets. A rolling
+update creates a new ReplicaSet and gradually shifts traffic/pods from the
+old one to the new one (maxUnavailable/maxSurge control the pace), keeping
+the app available throughout. Rollback simply re-activates the previous
+ReplicaSet's pod template, reversing the same mechanism.
