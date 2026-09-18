@@ -89,3 +89,11 @@ Feel free to contribute to this project by opening issues or submitting pull req
 - Special thanks to the Flask community for providing a fantastic web framework.
 
 Enjoy experimenting with the Flask sample app! If you have any questions or need further assistance, please don't hesitate to reach out.
+
+## Docker Hub
+
+Public image: https://hub.docker.com/r/whale92400/msc-de1-flask-app
+
+Tags published: `1.0.0` (versioned), `latest`
+
+Image used for the final Kubernetes deployment: `whale92400/msc-de1-flask-app:1.0.0`
