@@ -1,0 +1,16 @@
+=== Self-healing demonstration ===
+
+Command: kubectl delete pod flask-app-755c6bdf8-6ncvm -n msc-de1-project
+
+Observed via: kubectl get pods -n msc-de1-project -w
+
+Sequence:
+1. flask-app-755c6bdf8-6ncvm -> Terminating
+2. New pod flask-app-755c6bdf8-xfdz8 created automatically -> Pending -> ContainerCreating -> Running
+3. Old pod -> Completed (removed)
+4. Final state: 2/2 pods Running (desired replica count restored by the ReplicaSet)
+
+Explanation: The Deployment's ReplicaSet continuously reconciles the actual
+state with the desired state (replicas: 2). Deleting a pod reduces the
+observed count below the desired count, triggering the ReplicaSet controller
+to schedule a replacement pod automatically - no manual intervention needed.
