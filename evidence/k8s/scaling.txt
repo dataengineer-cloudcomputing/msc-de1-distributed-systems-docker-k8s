@@ -1,0 +1,14 @@
+=== Scaling demonstration ===
+
+Command: kubectl scale deployment flask-app -n msc-de1-project --replicas=3
+Result: deployment.apps/flask-app scaled -> 3/3 ready, new pod flask-app-755c6bdf8-cxmcv created
+
+Command: kubectl scale deployment flask-app -n msc-de1-project --replicas=2
+Result: deployment.apps/flask-app scaled -> excess pod (cxmcv) terminated gracefully,
+        final state: 2/2 pods Running (jm5gs, xfdz8)
+
+Explanation: kubectl scale updates the Deployment's replica count, which
+propagates to the ReplicaSet. The ReplicaSet controller then creates or
+removes pods to match the new desired count - the same reconciliation
+mechanism as self-healing, just triggered by an intentional spec change
+rather than pod failure.
