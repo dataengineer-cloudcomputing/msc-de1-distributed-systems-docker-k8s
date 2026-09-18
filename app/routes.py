@@ -25,3 +25,7 @@ def add_item():
     item = request.get_json()
     items.append(item)
     return {'message': 'Item added successfully'}, 201
+
+@app.route('/version')
+def version():
+    return {'version': '1.1.0'}
